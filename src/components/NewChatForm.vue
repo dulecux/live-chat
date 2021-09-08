@@ -37,7 +37,7 @@ export default {
            await addDoc(chat)
         if (!error.value) {
           message.value = ''
-      }
+        }
       }
 
      
