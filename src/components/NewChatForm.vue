@@ -5,7 +5,7 @@
       v-model="message"
       @keypress.enter.prevent="handleSubmit"
     ></textarea>
-    <div v-if="error" class="error">{{ error }} blah</div>
+    <div v-if="error" class="error">{{ error }}</div>
   </form>
 </template>
 
@@ -21,6 +21,7 @@ export default {
     const { addDoc, error } = useCollection('messages')
     // refs
     const message = ref('')
+
     
     const handleSubmit = async () => {
       const chat = {
@@ -28,11 +29,18 @@ export default {
         message: message.value,
         createdAt: timestamp()
       }
-      
-      await addDoc(chat)
-      if (!error.value) {
-        message.value = ''
+
+      if(chat.message == ''){
+        error.value="You must enter some text!"
       }
+      else {
+           await addDoc(chat)
+        if (!error.value) {
+          message.value = ''
+      }
+      }
+
+     
     }
     return { message, handleSubmit, error }
   }
